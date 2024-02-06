@@ -1,1 +1,8 @@
-/find_str/target
+/.git
+/BeamNG-FindStr/target
+/BeamNG-JBeamToJson/target
+/BeamNG-JBeamToJson/extracted
+/BeamNG-JBeamToJson/jbeam_to_json.exe
+/BeamNG-ContentBasher/vanilla_hashes.json
+/BeamNG-ContentBasher/results.json
+/BeamNG-ContentBasher/rust_hasher.exe
