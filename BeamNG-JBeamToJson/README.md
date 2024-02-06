@@ -1,34 +1,32 @@
 # BeamNG-JbeamToJson
-This tool converts Jbeam files to strict json files using the game own sjson.lua decoder. That maybe usefull if you want to access jbeam files outside of the game, then when the decoder of your choice cannot decode jbeam files.
 
-At default Extracts all JBeam file from the given game installation and puts them to `./extracted`
+## Motivation
+JBeam files are leniant json. So much leniant that i could not find any common strict or leniant json decoder that could successfully decode jbeam's without running into dozens of issues. It turns out that the jbeam json format is of the sjson format. This is a json format that has barely any coverage through libaries. This proposed the issue that it was simply not possible to work with jbeam files outside of the game in a trusted manner.
 
 ## Default Usage
-`jbeam_to_json.exe "C:/BeamNG.drive/content/vehicles"`
+Command line tool.
+- `jbeam_to_json.exe "C:/BeamNG.drive/content/vehicles"`
+Will drop all converted jbeams to the `./extracted` directory in the following tree hirachy.
+```
+zipname.zip/vehicles/jbmname/*
+eg. atv.zip/vehicles/atv/8x8/atv_fenders.jbeam
+```
 
-## Extract Jbeams from Zip files and convert them
+## Script wise
+- lib.rs features a jbeam to json decoder which makes uses of the game own sjson.lua.
 ```rust
-// Create converter
 let converter = JBeamToJson::new()?;
-
-// Create extractor
+```
+- lib.rs also features a extractor which extracts jbeams from zip files
+```rust
 let extractor = JBeamExtractor::new(PathToZipFile, PathToExtractTo);
-
-// Extract and convert
+```
+- Combined you can extract and automatically have this method convert the jbeams
+```rust
 exctractor.extract_and_convert(&converter)?;
 ```
-
-## Convert individual Jbeam data
+- Or convert sjson on your own
 ```rust
-// Create converter
-let converter = JBeamToJson::new()?;
-
-// Your JbeamData
 let jbeam = r#"{"test":123}"#;
-
-// convert
 let json = converter.convert(&jbeam);
 ```
-
-## Note
-Im pretty new to Rust
