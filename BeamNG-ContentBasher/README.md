@@ -9,7 +9,7 @@ Command line tool.
 - `eg. rust_hasher C:/BeamNG.drive/content/vehicles dds;jbeam C:/mymod.zip`
 
 1. Will automatically sha256 the game own files with the given extensions.
-2. Will then sha256 the given mod files with the given extenstions.
+2. Will then sha256 the given mod files with the given extensions.
 3. Then Bash the generated hashes against each other
 4. Write the results to `./results.json`
 ```json
@@ -26,22 +26,22 @@ Command line tool.
 ```
 
 ## Innerworkings
-Create a Extenstion filter
+- Create a Extension filter
 ```rust
 let extension_filter = ExtensionFilter::from("dds;json;whatever");
 ```
-Index the game own files
+- Index the game own files
 ```rust
 let mut vanilla_hashes = FileHashes::new();
 index_vanilla_content(&mut vanilla_hashes, &extension_filter, game_path);
 ```
-Index the mod files
+- Index the mod files
 ```rust
 // add hashes to the hashstruct.. 
 let mut mod_hashes = FileHashes::new();
 mod_hashes.hash_from_zip(path_to_mod, &extension_filter).unwrap();
 ```
-Bash and write the results to disk
+- Bash and write the results to disk
 ```rust
 // bash
 let (results, amount) = BashResults::from(&vanilla_hashes, &mod_hashes);
