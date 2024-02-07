@@ -21,7 +21,7 @@ impl FindStr {
 	}
 	fn process(&mut self) {
 		let line_vec: Vec<&str> = self.find_in.lines().collect();
-		let mut line_number = 0;
+		let mut line_number = 1;
 		for line in line_vec {
 			if line.to_lowercase().contains(&self.find) {
 				let formatted_line = line.to_string().replace("\t", "").replace("  ", "");
