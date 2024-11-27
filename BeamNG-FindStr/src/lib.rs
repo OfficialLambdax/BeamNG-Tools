@@ -43,7 +43,7 @@ impl FindStr {
 				println!("  : {}", line);
 				displayed += 1;
 				if displayed == max {
-				println!("  .. {} more results in this file", self.found_list.len() - 10);
+					println!("  .. {} more results in this file", self.found_list.len() - 10);
 					break;
 				}
 			}
@@ -61,12 +61,13 @@ impl FindStr {
 			} else {
 				let pos = line.to_lowercase().find(&self.find).unwrap();
 				let string_before = &line[..pos];
-				let string_after = &line[pos+self.find.len()..];
+				let string_after = &line[pos + self.find.len()..];
 				println!("  @ {}", line_number.to_string().yellow());
 				println!("  : {}{}{}", string_before, self.find.red(), string_after);
 				displayed += 1;
 				if displayed == max {
-				println!("  .. {} more results in this file", self.found_list.len() - 10);
+					println!("");
+					println!("  .. {} more results in this file", self.found_list.len() - (max as usize));
 					break;
 				}
 			}

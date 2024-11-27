@@ -19,7 +19,7 @@ fn main() {
 	if search_for.len() == 0 {println!("Search string is to short"); return}
 	
 	// specify the valid extensions
-	let mut extensions_str = "";
+	let extensions_str;
 	if args.len() < 3 {
 		extensions_str = "lua,js,jbeam";
 	} else {
@@ -43,7 +43,8 @@ fn main() {
 	}
 	
 	let game_files = recurse_files(game_path).unwrap();
-	for file in game_files {
+	println!("Searching through loose files");
+	for file in &game_files {
 		let file_extension = match file.extension() {
 			Some(v) => v.to_str().unwrap().to_lowercase(),
 			None => continue,
@@ -58,7 +59,18 @@ fn main() {
 			let displayed_path = &file.to_str().unwrap()[game_path.len()..];
 			FindStr::new(search_for, &file_contents, displayed_path).display_colored(15);
 			
-		} else if file_extension.to_lowercase() == "zip" { // if zip archive
+		}
+	}
+	
+	// look up files inside zip archives last
+	println!("Searching through files in zips");
+	for file in game_files {
+		let file_extension = match file.extension() {
+			Some(v) => v.to_str().unwrap().to_lowercase(),
+			None => continue,
+		};
+		
+		if file_extension.to_lowercase() == "zip" { // if zip archive
 			let archive = match File::open(file.clone()) {
 				Ok(v) => v,
 				Err(_) => continue,
